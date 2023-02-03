@@ -1,6 +1,7 @@
 import {headerApp} from "./components/Header.js";
 import {user} from "./components/user.js";
 import {modal} from "./components/modal.js";
+import {quizForm} from "./components/QuizForm.js";
 
 const app = Vue.createApp({
     template: `
@@ -14,14 +15,25 @@ const app = Vue.createApp({
         <header-app ref="headApp"></header-app>
         <user></user>
         <button @click="onToggleModal">Toggle Modal</button>
-        <base-modal v-if="isShowModal" title="This is title from main.js" content="Content nè" theme="sales" @cancel="onToggleModal"></base-modal>
+        <base-modal style="color: #0b0f0e" v-if="isShowModal" title="Tai tồ :D" content="Content nè" theme="sales" @cancel="onToggleModal">
+            <template v-slot:header> <!--Sử dụng thẻ template với v-slot: <name> -->
+                <p>hét đơ nè</p>
+            </template>
+            <template v-slot:footer>
+                <button @click="onToggleModal">Cancel</button>
+            </template>
+            <p>Còn tent</p> <!--Nếu không có thẻ template sẽ nhảy vào slot mặc định (không có name)-->
+            <!--Không cần phải viết đúng theo thứ tự bởi bên kia đã có name rồi
+                những cái slot tự động nhảy vào slot name của nó-->
+        </base-modal>
         <button @click="onChange">Change Me</button>
-       
+        <quiz-form></quiz-form>
     `,
     components: {
         'header-app': headerApp,
         'user': user,
         'base-modal': modal,
+        'quiz-form': quizForm,
     },
     data() {
         return {
