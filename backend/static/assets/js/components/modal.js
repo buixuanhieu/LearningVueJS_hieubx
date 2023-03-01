@@ -35,10 +35,12 @@ export const modal = {
     },
     data() {
         return{
+            abc: 'hiếu nè',
         };
     },
     methods:{
         onCloseModal() {
+            console.log(this.abc);
             this.$emit('cancel'); //emit: Gửi event từ children sang parents (modal đang là con của main qua base-modal)
         }
     }

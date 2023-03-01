@@ -27,7 +27,22 @@ const app = Vue.createApp({
                 những cái slot tự động nhảy vào slot name của nó-->
         </base-modal>
         <button @click="onChange">Change Me</button>
+        <table style="margin-top: 2rem">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+            </thead>
+            <tbody v-for="place in location">
+                <td style="padding: 6px">{{ place.id }}</td>
+                <td style="padding: 6px">{{ place.name }}</td>
+                <td style="padding: 6px">{{ place.location }}</td>
+            </tbody>
+        </table>
+        
         <quiz-form></quiz-form>
+        
+        
     `,
     components: {
         'header-app': headerApp,
@@ -58,24 +73,33 @@ const app = Vue.createApp({
                 }
             ],
             isShowModal: false,
+            location: [],
         }
     },
+    created() {
+        fetch('http://ditich.atkthainguyen.org.vn/api/place')
+            .then(response => response.json())
+            .then(data => {
+                this.location = data.results;
+                console.log(data.results);
+            })
+    },
     methods: {
-        onToggleCart(event, product){
+        onToggleCart(event, product) {
             product.isCart = !product.isCart;
         },
-        onChange(){
+        onChange() {
             console.log(this.$refs.headApp);
             this.$refs.headApp.onConsole(); //template ref: giúp truy cập và lấy dữ liệu, method.. của 1 component từ bên ngoài
         },
-        onToggleModal(){
+        onToggleModal() {
             this.isShowModal = !this.isShowModal;
         },
     },
-    computed:{
-      prComputed(){
-          return this.products.filter((product) => product.price > 140)
-      }
+    computed: {
+        prComputed() {
+            return this.products.filter((product) => product.price > 140)
+        }
     },
 });
 
